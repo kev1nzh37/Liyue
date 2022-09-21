@@ -1,3 +1,1 @@
-const add = () => console.log(add)
-
-export default add
+export { css } from "./core/css"

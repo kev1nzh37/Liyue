@@ -52,12 +52,12 @@ export default defineConfig([
     },
   },
   {
-    input: './src/index.ts',
+    input: './src/index_browser.ts',
     output: [
       {
         file: 'lib/bundle.umd.js',
         format: 'umd',
-        name: 'WppSso',
+        name: 'liyue',
         globals,
         exports: 'default',
       },
