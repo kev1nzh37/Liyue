@@ -49,12 +49,12 @@ export const css = (className: string, style: any) => {
   const renderMap: any = {}
   const styleMap: any = {}
 
-  transformCss(style, styleMap, className)
+  transformCss(style, styleMap, className, className)
   injectStyles(styleMap)
 
   Object.keys(styleMap).forEach((key) => {
     renderMap[key] = styleMap[key].renderClassName
   })
-
-  return renderMap
+  console.log(styleMap)
+  return Object.keys(renderMap).length === 1 ? renderMap.base : renderMap
 }

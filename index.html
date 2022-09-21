@@ -19,27 +19,22 @@
         align-items: center;
       }
     </style>
-    <script type="module">
-      import { css } from "./lib/bundle.mjs"
-
-      const buttonVar = css("wrapper", {
-        title: {
-          fontSize: '16px',
-          color: 'red',
-        },
-        content: {
-          marginTop: '24px',
-          fontSize: '14px',
-          color: '#ccc'
-        }
-      })
-
-      console.log(buttonVar)
-    </script>
   </head>
   <body>
     <div class="box">
-      <button>abc</button>
+      <div class="box-child"></div>
     </div>
+    <script type="module">
+      import { css } from "./lib/bundle.mjs"
+
+      document.querySelector(".box-child").className = css("box-child", {
+        width: "500px",
+        height: "500px",
+        'box-child__button': {
+          'background-color': 'red',
+        }
+      })
+
+    </script>
   </body>
 </html>
