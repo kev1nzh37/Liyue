@@ -1,21 +1,18 @@
 import { makeid } from "./utils"
-import { toLine } from "./transform"
+import { toHump, toLine } from "./transform"
 
 const transformCss = (
   style: any,
   styleMap: any,
   className: string,
-  parent?: string,
-  nextClassName?: string
+  parent?: string
 ) => {
   Object.keys(style).forEach((key) => {
     const value = style[key]
     const originClassName = `${className}__${makeid(6)}`
-    const renderClassName = `${
-      nextClassName ? nextClassName + " " : ""
-    }${originClassName}`
+    const renderClassName = `${originClassName}`
     if (typeof value === "object") {
-      transformCss(value, styleMap, `${className}-${key}`, key, renderClassName)
+      transformCss(value, styleMap, `${className}-${key}`, key)
     } else {
       const cssItemName = parent || "base"
       if (!styleMap[cssItemName]) {
@@ -25,7 +22,6 @@ const transformCss = (
           renderClassName,
         }
       }
-
       styleMap[cssItemName].cssStr += `${toLine(key)}:${value};`
     }
   })
@@ -53,8 +49,8 @@ export const css = (className: string, style: any) => {
   injectStyles(styleMap)
 
   Object.keys(styleMap).forEach((key) => {
-    renderMap[key] = styleMap[key].renderClassName
+    renderMap[toHump(key)] = styleMap[key].renderClassName
   })
-  console.log(styleMap)
+  console.log(styleMap, renderMap)
   return Object.keys(renderMap).length === 1 ? renderMap.base : renderMap
 }
