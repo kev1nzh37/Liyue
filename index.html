@@ -29,18 +29,95 @@
       </div>
     </div>
     <script type="module">
-      import { css } from "./lib/bundle.mjs"
+      import { css, createVars } from "./lib/bundle.mjs"
+
+      const vars = createVars("root", {
+        color: {
+          defaultHover: "#c299f5",
+          default: "#bc85ff",
+
+          primaryActive: "#7d58aa",
+          primaryHover: "#c299f5",
+          primary: "#bc85ff",
+
+          infoActive: "#364056",
+          infoHover: "#778299",
+          info: "#607196",
+
+          successActive: "#3c6c4c",
+          successHover: "#81b792",
+          success: "#66B780",
+
+          warningActive: "#cba010",
+          warningHover: "#f4d468",
+          warning: "#FFC914",
+
+          errorActive: "#aa3351",
+          errorHover: "#eb6b8c",
+          error: "#E5446D",
+
+          white: "#fff",
+          gray: "rgb(230, 230, 230)",
+        },
+        spacing: {
+          margin: {
+            s: "6px",
+            m: "10px",
+            l: "14px",
+            xl: "18px",
+          },
+          padding: {
+            s: "8px",
+            m: "14px",
+            l: "16px",
+            xl: "18px",
+          },
+          borderRadius: {
+            s: "4px",
+            m: "6px",
+            l: "8px",
+            xl: "10px",
+          },
+          height: {
+            s: "28px",
+            m: "34px",
+            l: "40px",
+            xl: "46px",
+          },
+        },
+        font: {
+          color: {
+            default: "rgb(51, 54, 40)",
+            primary: "red",
+          },
+          weight: {
+            s: "300",
+            m: "400",
+            l: "500",
+            xl: "600",
+          },
+          size: {
+            s: "12px",
+            m: "14px",
+            l: "16px",
+            xl: "18px",
+          },
+        },
+      })
+      
+      console.log(vars)
       const { boxChild, button, text } = css("box-child", {
         "background-color": "purple",
-        padding: '24px',
+        padding: "24px",
         button: {
           width: "500px",
           height: "300px",
           text: {
-            color: "blue",
+            color: vars.color.primary,
           },
         },
       })
+
       document.querySelector(".box-child").className = boxChild
       document.querySelector(".button").className = button
       document.querySelector(".text").className = text
