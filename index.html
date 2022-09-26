@@ -31,7 +31,8 @@
     <script type="module">
       import { css, createVars } from "./lib/bundle.mjs"
 
-      const vars = createVars("root", {
+      const vars = createVars(":root", {
+        size: "100px",
         color: {
           defaultHover: "#c299f5",
           default: "#bc85ff",
@@ -104,8 +105,7 @@
           },
         },
       })
-      
-      console.log(vars)
+
       const { boxChild, button, text } = css("box-child", {
         "background-color": "purple",
         padding: "24px",
@@ -117,10 +117,11 @@
           },
         },
       })
-
+      console.log(document.querySelector('.text').setAttribute('id', 'aabb'))
       document.querySelector(".box-child").className = boxChild
       document.querySelector(".button").className = button
       document.querySelector(".text").className = text
+      
     </script>
   </body>
 </html>

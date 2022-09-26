@@ -1,16 +1,30 @@
-import { injectStyles, toHump, transformCss, transformVars } from "./transform"
+import { injectStyles } from "./browser"
+import { transformCss } from "./transform"
+import { toHump } from "./utils"
 
-export const css = (className: string, style: any) => {
+const compileRenderMap = (styleMap: any) => {
   const renderMap: any = {}
-  const styleMap: any = {}
-
-  transformCss(style, styleMap, className, className)
-  injectStyles(styleMap, '.')
-
   Object.keys(styleMap).forEach((key) => {
     renderMap[toHump(key)] = styleMap[key].renderClassName
   })
-  console.log(styleMap, renderMap)
+
   return Object.keys(renderMap).length === 1 ? renderMap.base : renderMap
 }
+const compileStyleTextNode = (styleMap: any) => {
+  let styleStr: string = ""
+  Object.keys(styleMap).forEach((key) => {
+    const { originName, cssStr } = styleMap[key]
+    styleStr += `.${originName}{${cssStr}}`
+  })
 
+  return styleStr
+}
+
+export const css = (className: string, style: any) => {
+  const styleMap: any = transformCss(style, className)
+  const styleTextNode = compileStyleTextNode(styleMap)
+  const renderMap = compileRenderMap(styleMap)
+
+  injectStyles(styleTextNode)
+  return renderMap
+}
