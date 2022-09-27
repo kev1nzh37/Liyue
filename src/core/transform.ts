@@ -1,24 +1,35 @@
 import { makeid, toLine } from "./utils"
 
-const nextCss = (map: any, style: any, className: string, parent?: string) => {
-  Object.keys(style).forEach((key) => {
-    const value = style[key]
+const generateOriginName = (selector: string) => {
+  if (selector.startsWith("#")) {
+    return selector
+  } else return `${selector}__${makeid(6)}`
+}
+export const cleanSelector = (selector: string): string => {
+  if (selector.startsWith("#")) {
+    return selector.slice(1)
+  }
+  else return selector
+}
+
+const nextCss = (map: any, style: any, selector: string, parent?: string) => {
+  const originName = generateOriginName(selector)
+  const renderName = `${parent || ""} .${originName}`
+  Object.keys(style).forEach((childSelectorOrStyle: string) => {
+    const value = style[childSelectorOrStyle]
 
     if (typeof value === "object") {
-      nextCss(map, value, `${className}-${key}`, key)
+      nextCss(map, value, childSelectorOrStyle, renderName)
     } else {
-      const originName = `${className}__${makeid(6)}`
-      const renderClassName = `${originName}`
-      const cssItemName = parent || className
-
-      if (!map[cssItemName]) {
-        map[cssItemName] = {
+      if (!map[originName]) {
+        map[originName] = {
           cssStr: "",
           originName,
-          renderClassName,
+          renderName,
+          selector,
         }
       }
-      map[cssItemName].cssStr += `${toLine(key)}:${value};`
+      map[originName].cssStr += `${toLine(childSelectorOrStyle)}:${value};`
     }
   })
 }
@@ -39,14 +50,14 @@ export const nextVars = (map: any, vars: any, parentName: string = "") => {
   })
 }
 
-export const transformCss = (style: any, className: string) => {
+export const transformCss = (style: any, selector: string) => {
   const map = {}
-  nextCss(map, style, className)
+  nextCss(map, style, selector)
   return map
 }
 
-export const transformVars = (vars: any, parentName: string = "") => {
+export const transformVars = (vars: any) => {
   const map = {}
-  nextVars(map, vars, parentName)
+  nextVars(map, vars)
   return map
 }

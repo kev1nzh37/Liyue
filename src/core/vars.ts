@@ -37,6 +37,5 @@ export const createVars = (originName: string, vars: any) => {
   const renderMap = compileRenderMap(vars)
   injectStyles(varsTextNode)
 
-  console.log(renderMap)
   return renderMap
 }

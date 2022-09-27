@@ -109,19 +109,35 @@
       const { boxChild, button, text } = css("box-child", {
         "background-color": "purple",
         padding: "24px",
+        apple: {
+          width: "50px",
+        },
         button: {
           width: "500px",
           height: "300px",
           text: {
             color: vars.color.primary,
           },
+          h1: {
+            color: vars.color.primary,
+          },
+
+          ":hover": {
+            text: {
+              color: vars.color.primaryHover,
+            },
+          },
+        },
+        card: {
+          "card-item": {
+            borderRadius: "10px",
+          },
         },
       })
-      console.log(document.querySelector('.text').setAttribute('id', 'aabb'))
+      document.querySelector(".text").setAttribute("id", "abc")
       document.querySelector(".box-child").className = boxChild
       document.querySelector(".button").className = button
       document.querySelector(".text").className = text
-      
     </script>
   </body>
 </html>
