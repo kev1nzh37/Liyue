@@ -22,12 +22,7 @@ const compileStyleTextNode = (styleMap: any) => {
 }
 
 export const css = (className: string, style: any) => {
-  const styleMap: any = transformCss(style, className)
-  console.log(styleMap)
-  const styleTextNode = compileStyleTextNode(styleMap)
-  const renderMap = compileRenderMap(styleMap)
-
   const styleTree = new StyleTree(className, style)
-  injectStyles(styleTextNode)
-  return renderMap
+
+  return styleTree.renderMap
 }
